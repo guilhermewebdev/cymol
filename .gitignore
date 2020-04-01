@@ -1,1 +1,4 @@
 cymol/server/api/gateway/node_modules/
+cymol/server/api/gateway/dist
+cymol/server/api/auth/auth/__pycache__
+cymol/server/api/auth/*/__pycache__

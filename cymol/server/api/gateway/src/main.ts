@@ -5,7 +5,7 @@ import { ApolloGateway } from '@apollo/gateway';
 // your implementing service names and URLs
 const gateway = new ApolloGateway({
   serviceList: [
-    { name: 'accounts', url: 'http://localhost:4001' },
+    { name: 'auth', url: 'http://http://172.35.10.20:8000/' },
     // Define additional services here
   ],
 });
@@ -13,7 +13,8 @@ const gateway = new ApolloGateway({
 // Pass the ApolloGateway to the ApolloServer constructor
 const server = new ApolloServer({
   gateway,
-
+  playground: true,
+  introspection: true,
   // Disable subscriptions (not currently supported with ApolloGateway)
   subscriptions: false,
 });
