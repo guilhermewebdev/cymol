@@ -2,3 +2,23 @@ version: "3.7"
 
 services: 
     gateway: 
+        build:
+            context: ./server/api/gateway/
+            dockerfile: Dockerfile.dev
+        command: npm run test
+    networks: 
+        backend:
+            ipv4_address: 172.35.10.10
+
+networks:     
+    backend:
+        driver: bridge
+        ipam:
+            config: 
+                - subnet: 172.35.10.1/16
+    db:
+        driver: bridge
+        ipam:
+            config: 
+                - subnet: 172.25.20.1/16
+    
