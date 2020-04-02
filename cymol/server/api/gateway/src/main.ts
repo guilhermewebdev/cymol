@@ -11,8 +11,9 @@ const server:ApolloServer = new ApolloServer({
     gateway,
     subscriptions: false,
     tracing: true,
-    playground:DEBUG,
-})
+    playground: DEBUG,
+});
+
 MIDDLEWARES.forEach((middleware:any) => app.use(middleware))
 INSTALLEDS_APPS.forEach((subApp:Express) => app.use(subApp))
 server.applyMiddleware({ app, path:'/', cors:true })

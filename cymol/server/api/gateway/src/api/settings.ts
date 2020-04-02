@@ -13,13 +13,15 @@ export const DEBUG:boolean = true;
 
 export const PORT:number = 4000;
 
-export const HOST:string = '0.0.0.0'
+export const HOST:string = '0.0.0.0';
 
-export const ALLOWED_HOSTS:Array<string> = ['localhost']
+export const ALLOWED_HOSTS:Array<string> = ['localhost'];
 
-export const INSTALLEDS_APPS:Array<Express> = []
+export const INSTALLEDS_APPS:Array<Express> = [];
 
-export const SERVICES:Array<ServiceDefinition> = []
+export const SERVICES:Array<any> = [
+    {name: 'auth', url: 'http://172.35.10.20:8000/'},
+];
 
 export const MIDDLEWARES:Array<any> = [
     helmet(),
@@ -28,9 +30,9 @@ export const MIDDLEWARES:Array<any> = [
     cors(),
     compression(),
     // csrf({cookie:true}),
-    hostValidation({hosts:ALLOWED_HOSTS}),
+    hostValidation({ hosts:ALLOWED_HOSTS }),
     // RateLimit({
     //     windowMs: 15*60*1000, // 15 minutes 
     //     max: 100, // limit each IP to 100 requests per windowMs 
     // }),
-]
+];
