@@ -22,6 +22,8 @@ services:
         networks: 
             backend:
                 ipv4_address: 172.35.10.10
+        depends_on: 
+            - proxy
             
     auth:
         build: 
