@@ -25,8 +25,8 @@ export const SERVICES:Array<any> = [
 
 export const MIDDLEWARES:Array<any> = [
     helmet(),
-    cookieParser(),
-    bodyParser(),    
+    // cookieParser(),
+    bodyParser(),
     cors(),
     compression(),
     // csrf({cookie:true}),
