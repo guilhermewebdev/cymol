@@ -1,1 +1,10 @@
 Django
+gunicorn
+argon2-cffi
+psycopg2
+django-filter
+django-axes
+django-guardian
+django-graphql-jwt
+django-cors-middleware
+graphene-django

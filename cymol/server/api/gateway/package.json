@@ -4,7 +4,8 @@
   "description": "Api gateway para o sistema Cymol",
   "main": "dist/main.js",
   "scripts": {
-    "test": "npx nodemon src/main.ts"
+    "test": "npx nodemon src/main.ts",
+    "start": "npx nodemon dist/main.js"
   },
   "author": "Guilherme Isaias Silva",
   "license": "MIT",
@@ -19,6 +20,8 @@
     "@types/graphql": "^14.5.0",
     "@types/helmet": "0.0.45",
     "@types/host-validation": "^2.0.0",
+    "@types/mongodb": "^3.5.4",
+    "@types/mongoose": "^5.7.8",
     "nodemon": "^2.0.2",
     "ts-node": "^8.8.1",
     "typescript": "^3.8.3"
@@ -37,6 +40,8 @@
     "express-rate-limit": "^5.1.1",
     "graphql": "^14.6.0",
     "helmet": "^3.22.0",
-    "host-validation": "^2.0.1"
+    "host-validation": "^2.0.1",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.7"
   }
 }

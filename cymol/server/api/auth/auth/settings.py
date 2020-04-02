@@ -25,11 +25,7 @@ SECRET_KEY = 'u&1jo9iwj5d@7e*8@!n0f9ae@tbq+^iocf##x4ek3b3i)2eovx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '172.35.10.20:8000',
-    'localhost',
-    '*'
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +70,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'auth.wsgi.application'
 
+GRAPHENE = {
+    'SCHEMA': 'auth.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -103,6 +106,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

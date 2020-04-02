@@ -16,25 +16,61 @@ services:
         build:
             context: ./server/api/gateway/
             dockerfile: Dockerfile.dev
-        command: npm run test
+        command: npm start
         volumes: 
             - ./server/api/gateway:/code
         networks: 
             backend:
                 ipv4_address: 172.35.10.10
+            db:
+                ipv4_address: 172.25.20.10
         depends_on: 
             - proxy
+            - mongo
+            - build_gateway
+
+    build_gateway: 
+        build:
+            context: ./server/api/gateway/
+            dockerfile: Dockerfile.dev
+        command: npx tsc -w
+        volumes: 
+            - ./server/api/gateway:/code        
+
+    mongo:
+        image: mongo
+        restart: always
+        volumes: 
+            - ./server/database/mongo/data:/data/db:rw        
+        networks: 
+            db:
+                ipv4_address: 172.25.20.20
+
+    mongo-manager:
+        image: mongo-express
+        restart: always
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_SERVER: 172.25.20.20
+        depends_on: 
+            - mongo
+        networks: 
+            db:
+                ipv4_address: 172.25.20.50
             
     auth:
         build: 
             context: ./server/api/auth/
             dockerfile: Dockerfile.dev
-        command: ./manage.py runserver 0.0.0.0:8000
+        command: ./manage.py runserver 0.0.0.0:8000 --insecure
         volumes: 
             - ./server/api/auth:/code
         networks: 
             backend:
                 ipv4_address: 172.35.10.20
+        depends_on: 
+            - gateway
 
 networks:     
     backend:
