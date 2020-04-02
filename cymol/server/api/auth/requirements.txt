@@ -8,3 +8,4 @@ django-guardian
 django-graphql-jwt
 django-cors-middleware
 graphene-django
+pyjwt[crypto]

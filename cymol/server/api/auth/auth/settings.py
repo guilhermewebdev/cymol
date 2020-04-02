@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'auth.urls'
@@ -83,11 +85,14 @@ GRAPHENE = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -107,15 +112,35 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
 AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+PRIVATE_KEY = None
+PUBLIC_KEY = None
+with open(os.path.join(BASE_DIR, 'auth', 'keys', 'jwt', 'private.key'), 'rt') as file:
+    PRIVATE_KEY = file.read()
+
+with open(os.path.join(BASE_DIR, 'auth', 'keys', 'jwt', 'public.csr'), 'rt') as file:
+    PUBLIC_KEY = file.read()
+
 GRAPHQL_JWT = {
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
-    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'RS512',
+    'JWT_PUBLIC_KEY': PUBLIC_KEY,
+    'JWT_SECRET_KEY': PRIVATE_KEY,
     'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
 }

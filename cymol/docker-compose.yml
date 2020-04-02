@@ -6,6 +6,7 @@ services:
         volumes: 
             - ./server/proxy/nginx/conf.d:/etc/nginx/conf.d
             - ./server/proxy/nginx/nginx.conf:/etc/nginx/nginx.conf
+        restart: always
         ports: 
             - 80:80
             - 443:443
@@ -16,6 +17,7 @@ services:
         build:
             context: ./server/api/gateway/
             dockerfile: Dockerfile.dev
+        restart: always
         command: npm start
         volumes: 
             - ./server/api/gateway:/code
@@ -27,12 +29,14 @@ services:
         depends_on: 
             - proxy
             - mongo
+            - auth
             - build_gateway
 
     build_gateway: 
         build:
             context: ./server/api/gateway/
             dockerfile: Dockerfile.dev
+        restart: always
         command: npx tsc -w
         volumes: 
             - ./server/api/gateway:/code        
@@ -41,7 +45,7 @@ services:
         image: mongo
         restart: always
         volumes: 
-            - ./server/database/mongo/data:/data/db:rw        
+            - ./server/database/mongo/data:/data/db:rw
         networks: 
             db:
                 ipv4_address: 172.25.20.20
@@ -63,14 +67,37 @@ services:
         build: 
             context: ./server/api/auth/
             dockerfile: Dockerfile.dev
-        command: ./manage.py runserver 0.0.0.0:8000 --insecure
+        command: python manage.py runserver 0.0.0.0:8000
+        restart: always
         volumes: 
             - ./server/api/auth:/code
+        environment: 
+            DB_PASSWORD: password
+            DB_USER: cymol
+            DB_NAME: database
+            DB_HOST: 172.25.20.30
+            DB_PORT: 5432    
         networks: 
             backend:
                 ipv4_address: 172.35.10.20
+            db:
+               ipv4_address: 172.25.20.12
         depends_on: 
-            - gateway
+            - postgres
+
+    postgres:
+        image: postgres:alpine
+        restart: always
+        volumes: 
+            - ./server/database/postgres/data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: cymol
+            POSTGRES_DB: database
+        networks: 
+            db:
+                ipv4_address: 172.25.20.30
+        
 
 networks:     
     backend:
