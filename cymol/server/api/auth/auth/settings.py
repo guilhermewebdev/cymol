@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from datetime import timedelta
+from cryptography.hazmat.primitives.asymmetric import rsa
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -129,18 +131,18 @@ AUTHENTICATION_BACKENDS = [
 
 PRIVATE_KEY = None
 PUBLIC_KEY = None
-with open(os.path.join(BASE_DIR, 'auth', 'keys', 'jwt', 'private.key'), 'rt') as file:
+with open(os.path.join(BASE_DIR, 'auth', 'keys', 'jwt', 'private.pem'), 'rt') as file:
     PRIVATE_KEY = file.read()
 
-with open(os.path.join(BASE_DIR, 'auth', 'keys', 'jwt', 'public.csr'), 'rt') as file:
+with open(os.path.join(BASE_DIR, 'auth', 'keys', 'jwt', 'public.pem'), 'rt') as file:
     PUBLIC_KEY = file.read()
 
 GRAPHQL_JWT = {
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
-    'JWT_ALGORITHM': 'RS512',
-    'JWT_PUBLIC_KEY': PUBLIC_KEY,
-    'JWT_SECRET_KEY': PRIVATE_KEY,
+    # 'JWT_ALGORITHM': 'RS512',
+    # 'JWT_PUBLIC_KEY': PUBLIC_KEY,
+    # 'JWT_SECRET_KEY': PRIVATE_KEY,
     'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
 }

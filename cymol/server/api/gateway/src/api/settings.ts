@@ -23,18 +23,19 @@ export const SERVICES:Array<any> = [
     { name: 'auth', url: 'http://172.35.10.20:8000/graphql' },
 ];
 
+export const csrfProtection = csrf({ cookie: true })
+
 export const MIDDLEWARES:Array<any> = [
     helmet(),
-    // cookieParser(),
-    bodyParser(),
-    cors(),
+    RateLimit({
+        windowMs: 15*60*1000, // 15 minutes 
+        max: 1000, // limit each IP to 100 requests per windowMs 
+    }),
+    hostValidation({ hosts: ALLOWED_HOSTS }),
     compression(),
-    // csrf({cookie:true}),
-    hostValidation({ hosts:ALLOWED_HOSTS }),
-    // RateLimit({
-    //     windowMs: 15*60*1000, // 15 minutes 
-    //     max: 100, // limit each IP to 100 requests per windowMs 
-    // }),
+    bodyParser.json({ type: 'application/*+json' }),
+    cookieParser(),
+    // csrfProtection,
 ];
 
 export const MONGOOSE_CONF:any = {

@@ -13,11 +13,12 @@ class ServiceField(graphene.ObjectType):
         string_schema = string_schema.replace("schema {   query: Query   mutation: MutationQuery }", "")
         return string_schema
 
-class Service:
-    _service = graphene.Field(ServiceField, name="_service", resolver=lambda x, _: {})
-
-class Query(graphene.ObjectType, Service):
+class Query(graphene.ObjectType):
     debug = graphene.Field(DjangoDebug, name="_debug")
+    _service = graphene.Field(ServiceField, name="_service", resolver=lambda x, _: {})
+    is_authenticated = graphene.Boolean(
+        resolver=lambda x, i: str(i.context.user.is_authenticated)
+    )
 
 class Mutation(graphene.ObjectType):
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
