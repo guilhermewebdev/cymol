@@ -37,7 +37,7 @@ class Registration(graphene.Mutation):
         if(form.is_valid()):
             user = get_user_model().objects.create_user(**form.cleaned_data)
         else: raise graphql.GraphQLError(
-            message=dict(form._errors)
+            dict(form._errors),
         )
         return Registration(user=user)
 
