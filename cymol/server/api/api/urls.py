@@ -1,4 +1,4 @@
-"""auth URL Configuration
+"""api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -15,12 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from graphene_django.views import GraphQLView
-from django.views.decorators.csrf import csrf_exempt
-from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=False)), name='auth'),
-    path('keys/<str:key>', views.keys)
 ]
