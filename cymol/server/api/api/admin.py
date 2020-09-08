@@ -6,3 +6,8 @@ class AdminSite(admin.AdminSite):
         return request.user.is_active
 
 cymol = AdminSite(name='cymol')
+
+def register(model_or_iterator):
+    def decorator(admin_class):
+        cymol.register(model_or_iterator, admin_class)
+    return decorator
