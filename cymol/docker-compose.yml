@@ -32,7 +32,6 @@ services:
         image: postgres:alpine
         restart: always
         volumes: 
-            - ./server/database/postgres/data:/var/lib/postgresql/data:z
             - ./server/database/secrets:/run/secrets:z
         environment:
             POSTGRES_PASSWORD_FILE: /run/secrets/PASS
