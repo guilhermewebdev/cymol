@@ -15,6 +15,11 @@ class Product(models.Model):
         verbose_name='stock amount',
         default=1,
     )
+    store = models.ForeignKey(
+        'store.Store',
+        on_delete=models.CASCADE,
+        related_name='products',
+    )
 
 class ProductImage(models.Model):
     image = models.ImageField(
