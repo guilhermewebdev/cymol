@@ -6,3 +6,5 @@ cymol/server/database/
 db.sqlite3
 .env
 __pycache__
+*.autosave
+*~
