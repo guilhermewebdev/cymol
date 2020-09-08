@@ -16,3 +16,7 @@ class Wish(models.Model):
         verbose_name='registration date',
         auto_now=True,
     )
+
+    class Meta:
+        verbose_name = 'wish'
+        verbose_name_plural = 'wishes'

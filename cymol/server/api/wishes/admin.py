@@ -1,3 +1,7 @@
 from django.contrib import admin
+from api.admin import register, cymol
+from . import models
 
-# Register your models here.
+@register(models.Wish)
+class WishAdmin(admin.ModelAdmin):
+    pass
