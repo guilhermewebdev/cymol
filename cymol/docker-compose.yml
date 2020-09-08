@@ -20,11 +20,6 @@ services:
         command: pypy3 manage.py runserver 0.0.0.0:8000
         environment: 
             PYTHONUNBUFFERED: 1
-            DB_PASSWORD: password
-            DB_USER: cymol
-            DB_NAME: database
-            DB_HOST: 172.25.20.30
-            DB_PORT: 5432    
         networks: 
             backend:
                 ipv4_address: 172.35.10.20
@@ -38,10 +33,11 @@ services:
         restart: always
         volumes: 
             - ./server/database/postgres/data:/var/lib/postgresql/data:z
+            - ./server/database/secrets:/run/secrets:z
         environment:
-            POSTGRES_PASSWORD: password
-            POSTGRES_USER: cymol
-            POSTGRES_DB: database
+            POSTGRES_PASSWORD_FILE: /run/secrets/PASS
+            POSTGRES_USER_FILE: /run/secrets/USER
+            POSTGRES_DB_FILE: /run/secrets/DB
         networks: 
             db:
                 ipv4_address: 172.25.20.30
