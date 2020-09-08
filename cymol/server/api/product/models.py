@@ -15,3 +15,13 @@ class Product(models.Model):
         verbose_name='stock amount',
         default=1,
     )
+
+class ProductImage(models.Model):
+    image = models.ImageField(
+        verbose_name='image',
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='images',
+    )
