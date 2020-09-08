@@ -3,6 +3,7 @@
 ## Comum  
 1. Criar uma conta para acessar  
 2. Fazer Login  
+3. Abrir chamados de suporte
   
 ## Cliente  
 1. Navegar nas lojas da região  
@@ -29,3 +30,10 @@
 6. Expor sua localização em tempo real  
 7. Estimar o tempo de entrega  
 8. Receber o pagamento  
+
+## Suporte
+1. Conversar com o usuário
+2. Responder chamados
+3. Acessar os dados das lojas
+4. Modificar dados do sistema
+5. Acessar dados dos pedidos
