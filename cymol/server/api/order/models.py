@@ -7,10 +7,21 @@ class Order(models.Model):
         on_delete=models.DO_NOTHING,
         related_name='orders',
     )
-    products = models.ManyToManyField(
-        'product.Product',
-        related_name='orders'
-    )
     registration_date = models.DateTimeField(
         auto_now=True,
+    )
+
+class ProductToOrder(models.Model):
+    product = models.ForeignKey(
+        'product.Product',
+        on_delete=models.DO_NOTHING,
+        related_name='orders',
+    )
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='products',
+    )
+    amount = models.IntegerField(
+        default=1
     )
