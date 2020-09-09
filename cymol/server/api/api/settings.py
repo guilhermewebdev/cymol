@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+PUBLIC_MERCADOPAGO_KEY = os.getenv('PUBLIC_MERCADOPAGO_KEY')
+MERCADOPAGO_TOKEN = os.getenv('MERCADOPAGO_TOKEN')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +45,8 @@ INSTALLED_APPS = [
     'product',
     'store',
     'wishes',
+    'cart',
+    'order',
 ]
 
 MIDDLEWARE = [
