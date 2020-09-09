@@ -7,7 +7,15 @@ class Cart(models.Model):
         on_delete=models.CASCADE,
         related_name='cart'
     )
-    products = models.ManyToManyField(
+
+class ProductInCart(models.Model):
+    product = models.ForeignKey(
         'product.Product',
         related_name='carts',
+        on_delete=models.CASCADE,
+    )
+    cart = models.ForeignKey(
+        Cart,
+        on_delete=models.CASCADE,
+        related_name='products',
     )
