@@ -7,6 +7,8 @@ class Payment(models.Model):
         on_delete=models.DO_NOTHING,
         related_name='payments',
     )
-    value = models.FloatField(
-        verbose_name='value',
+    order = models.OneToOneField(
+        'order.Order',
+        on_delete=models.DO_NOTHING,
+        related_name='payment',
     )

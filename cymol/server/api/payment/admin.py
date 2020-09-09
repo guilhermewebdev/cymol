@@ -1,3 +1,7 @@
 from django.contrib import admin
+from api.admin import cymol, register
+from . import models
 
-# Register your models here.
+@register(models.Payment)
+class PaymentsAdmin(admin.ModelAdmin):
+    pass
