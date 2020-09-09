@@ -8,4 +8,4 @@ class ProductsToCardInline(admin.TabularInline):
 
 @register(models.Cart)
 class CartAdmin(admin.ModelAdmin):
-    inline = [ProductsToCardInline]
+    inlines = [ProductsToCardInline]
