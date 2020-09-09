@@ -3,9 +3,9 @@ from api.admin import cymol, register
 from . import models
 
 class ProductsInline(admin.TabularInline):
-    model = models.ProductToOrder
     extra = 1
+    model = models.ProductToDelivery
 
-@register(models.Order)
-class OrderAdmin(admin.ModelAdmin):
+@register(models.Delivery)
+class DeliveryAdmin(admin.ModelAdmin):
     inlines = [ProductsInline]
